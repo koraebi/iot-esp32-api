@@ -1,21 +1,17 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from '../app.service';
+import { Esp } from '../esp';
 
 @Controller('esp')
 export class EspController {
   constructor(private readonly appService: AppService) {}
 
   @Post()
-  async addEsp(
-    @Body('name') name: string,
-    @Body('ip') ip: string,
-    @Body('mac') mac: string,
-    @Body('led') led: boolean,
-    @Body('light') light: number,
-  ): Promise<boolean> {
-    if (mac === undefined) return false;
+  async addEsp(@Body() esp: Esp): Promise<boolean> {
+    console.log(esp);
+    if (esp?.mac === undefined) return false;
 
-    return await this.appService.mongoAddEspData(name, ip, mac, led, light);
+    return await this.appService.mongoAddEspData(esp);
   }
 
   @Get()

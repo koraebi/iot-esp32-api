@@ -1,15 +1,10 @@
-import { Body, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { MongoClient } from 'mongodb';
+import { Esp } from './esp';
 
 @Injectable()
 export class AppService {
-  async mongoAddEspData(
-    name: string,
-    ip: string,
-    mac: string,
-    led: boolean,
-    light: number,
-  ): Promise<boolean> {
+  async mongoAddEspData(esp: Esp): Promise<boolean> {
     try {
       const client = await MongoClient.connect(
         'mongodb://koraebi:7STgrind*@52.43.76.141:27017/?authSource=admin&readPreference=primary&ssl=false',
@@ -18,14 +13,14 @@ export class AppService {
         },
       );
 
-      const query = { mac: mac };
+      const query = { mac: esp.mac };
       const update = {
         $set: {
-          name: name,
-          ip: ip,
-          mac: mac,
-          led: led,
-          light: light,
+          name: esp.name,
+          ip: esp.ip,
+          mac: esp.mac,
+          led: esp.led,
+          light: esp.light,
         },
       };
       const options = { upsert: true }; //Update ou Insert si inexistant
