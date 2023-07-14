@@ -7,7 +7,7 @@ export class AppService {
   async mongoAddEspData(esp: Esp): Promise<boolean> {
     try {
       const client = await MongoClient.connect(
-        'mongodb://koraebi:7STgrind*@52.43.76.141:27017/?authSource=admin&readPreference=primary&ssl=false',
+        `mongodb://koraebi:${process.env.DB_PASSWORD}@${process.env.DB_IP}:${process.env.DB_PORT}/?authSource=admin&readPreference=primary&ssl=false`,
         {
           useUnifiedTopology: true,
         },
@@ -36,7 +36,7 @@ export class AppService {
   async mongoGetEspData(): Promise<string[]> {
     try {
       const client = await MongoClient.connect(
-        'mongodb://koraebi:7STgrind*@52.43.76.141:27017/?authSource=admin&readPreference=primary&ssl=false',
+        `mongodb://koraebi:${process.env.DB_PASSWORD}@${process.env.DB_IP}:${process.env.DB_PORT}/?authSource=admin&readPreference=primary&ssl=false`,
         {
           useUnifiedTopology: true,
         },
